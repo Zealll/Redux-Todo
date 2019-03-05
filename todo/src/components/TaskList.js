@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTask } from '../actions'
+import {toggleTask} from '../actions'
 
 class TaskList extends React.Component {
     state ={
@@ -17,6 +18,11 @@ class TaskList extends React.Component {
         this.setState({newTask: ''})
     }
 
+    toggleTask = id => {
+        this.props.toggleTask(id)
+    }
+
+
     render() {
         return (
             <>
@@ -28,7 +34,14 @@ class TaskList extends React.Component {
                 
                 <button onClick={this.addTask}>Add Task</button>
                 {this.props.taskList.map(task => (
-                    <div className='eachTask' key={task.id}><h3>{task.task}</h3></div>
+                    <div    
+                        className='eachTask' 
+                        key={task.id} 
+                        onClick={() => this.toggleTask(task.id)}
+                    >
+                            
+                        <h3>{task.task}</h3>
+                    </div>
                 ))}
             </>
         )
@@ -47,5 +60,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { addTask }
+    { addTask, toggleTask }
     )(TaskList)
