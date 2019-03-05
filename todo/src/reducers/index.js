@@ -1,4 +1,4 @@
-import React from 'react';
+import { ADD_TASK } from '../actions'
 
 const initialState = {
     todos: [
@@ -8,6 +8,18 @@ const initialState = {
 
 function todosReducer(state = initialState, action) {
     switch(action.type) {
+        case ADD_TASK:
+        const newTask = {
+            task: action.payload,
+            id: Date.now(),
+            status: false
+        }
+        return {
+            ...state,
+            todos: [...state.todos, newTask]
+        }
+
+
         default: return state
     }
 }

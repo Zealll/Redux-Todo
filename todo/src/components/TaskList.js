@@ -1,17 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { addTask } from '../actions'
 
 class TaskList extends React.Component {
     state ={
-
+        newTask: '',
     }
 
+    handleChanges = e => {
+        this.setState({newTask: e.target.value})
+    }
+
+    addTask = e => {
+        e.preventDefault();
+        this.props.addTask(this.state.newTask)
+        this.setState({newTask: ''})
+    }
 
     render() {
         return (
             <>
+                <input type='text'
+                name='newTask'
+                value={this.state.newTask}
+                onChange={this.handleChanges}
+                />
+                
+                <button onClick={this.addTask}>Add Task</button>
                 {this.props.taskList.map(task => (
-                    <div className='eachTask'><h3>{task.task}</h3></div>
+                    <div className='eachTask' key={task.id}><h3>{task.task}</h3></div>
                 ))}
             </>
         )
@@ -28,4 +45,7 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps)(TaskList)
+export default connect(
+    mapStateToProps,
+    { addTask }
+    )(TaskList)
