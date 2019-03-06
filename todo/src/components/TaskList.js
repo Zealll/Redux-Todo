@@ -35,7 +35,7 @@ class TaskList extends React.Component {
                 <button onClick={this.addTask}>Add Task</button>
                 {this.props.taskList.map(task => (
                     <div    
-                        className='eachTask' 
+                        className={task.completed ? ' completed' : ''}
                         key={task.id} 
                         onClick={() => this.toggleTask(task.id)}
                     >
